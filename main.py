@@ -8,7 +8,9 @@ char = "░"
 
 def noise_to_color(val):
     norm = (val + 1) / 2
-    color = int(16 + norm * 215)
+    purple_start = 90
+    purple_range = 45
+    color = int(purple_start + norm * purple_range)
     return color
 
 def render_frame(time_step):
