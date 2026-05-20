@@ -97,14 +97,25 @@ color_schemes = {
 
 ## AI Bootstrap Prompt
 
-You are working on **Firefly** — a Python terminal animation that renders 3D Perlin noise as a full-screen ANSI 256-color animation.
+> Copy and paste into Claude, Cursor, Codex, or GPT:
 
-**Stack:** Python 3.7+, `noise` package (only external dependency)
-**Entry point:** `main.py` (single file)
-**Run:** `pip install noise && python main.py`
+```text
+You are working on Firefly — a Python terminal animation that renders
+3D Perlin noise as a full-screen ANSI 256-color animation.
 
-**Non-obvious:**
-- All config lives in two dicts at the top of `main.py`: `state` (scale, speed, char) and `color_schemes` (ANSI color offset + range per scheme) — no external config file
-- Rendering works by printing to fixed cursor position `[H` every frame — no `clear()` call, which is why there is no flicker
-- The Z-axis of `pnoise3` is the time dimension — incrementing it each frame creates smooth motion through 3D noise space
-- Adding a new color scheme: add an entry to `color_schemes` as `(start_color, range)` in ANSI 256 space and wire it into the `C` key handler
+Stack: Python 3.7+, noise package (only external dependency)
+Entry point: main.py (single file)
+Run: pip install noise && python main.py
+
+Non-obvious:
+- All config lives in two dicts at the top of main.py:
+    state        — scale, speed, char
+    color_schemes — ANSI color offset + range per scheme
+  No external config file.
+- Rendering writes to fixed cursor position \033[H every frame —
+  no clear() call, which is why there is no flicker
+- The Z-axis of pnoise3 is the time dimension — incrementing it each
+  frame creates smooth motion through 3D noise space
+- Adding a new color scheme: add an entry to color_schemes as
+  (start_color, range) in ANSI 256 space and wire it into the C key handler
+```
