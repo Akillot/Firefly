@@ -60,8 +60,8 @@ python main.py
 Each frame:
 1. Sample `pnoise3(x * scale, y * scale, time_step)` for every terminal cell
 2. Map noise value (−1..1) → ANSI 256 color index via scheme-specific offset + range
-3. Render character (`░`) with `\033[38;5;{color}m` escape code
-4. Print entire frame at cursor position `\033[H` — no screen clear, no flicker
+3. Render character (`░`) with `[38;5;{color}m` escape code
+4. Print entire frame at cursor position `[H` — no screen clear, no flicker
 
 The time dimension advances by `speed` each frame (default 0.005), creating smooth motion through 3D noise space.
 
@@ -92,3 +92,19 @@ color_schemes = {
 ## License
 
 [MIT](./LICENSE)
+
+---
+
+## AI Bootstrap Prompt
+
+You are working on **Firefly** — a Python terminal animation that renders 3D Perlin noise as a full-screen ANSI 256-color animation.
+
+**Stack:** Python 3.7+, `noise` package (only external dependency)
+**Entry point:** `main.py` (single file)
+**Run:** `pip install noise && python main.py`
+
+**Non-obvious:**
+- All config lives in two dicts at the top of `main.py`: `state` (scale, speed, char) and `color_schemes` (ANSI color offset + range per scheme) — no external config file
+- Rendering works by printing to fixed cursor position `[H` every frame — no `clear()` call, which is why there is no flicker
+- The Z-axis of `pnoise3` is the time dimension — incrementing it each frame creates smooth motion through 3D noise space
+- Adding a new color scheme: add an entry to `color_schemes` as `(start_color, range)` in ANSI 256 space and wire it into the `C` key handler
